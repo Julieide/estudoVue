@@ -1,28 +1,75 @@
+
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="corpo">
+    <h1 class="centralizado">{{ titulo }}</h1>
+    <h2 class="centralizado">{{ subtitulo }}</h2>
+
+    <ul class="lista-fotos">
+      <li class="lista-fotos-item" v-for="foto of fotos" :key="foto.titulo">
+
+        <meu-painel :titulo="foto.titulo">
+            <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
+        </meu-painel>
+
+      </li>
+    </ul>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Painel from './components/shared/painel/Painel.vue';
 
 export default {
-  name: 'App',
+
   components: {
-    HelloWorld
+    'meu-painel' : Painel
+  },
+
+  data() {
+
+    return {
+
+      titulo: 'Alurapic', 
+      subtitulo: 'Estudo Vue',
+
+      fotos: []
+    }
+  },
+
+  created() {
+
+    this.$http.get('http://localhost:3000/v1/fotos')
+      .then(res => res.json())
+      .then(fotos => this.fotos = fotos, err => console.log(err));
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .corpo {
+    font-family: Helvetica, sans-serif;
+    width: 96%;
+    margin: 0 auto;
+  }
+
+  .centralizado {
+
+    text-align: center;
+  }
+
+  .lista-fotos {
+    list-style: none;
+  }
+
+  .lista-fotos .lista-fotos-item {
+
+    display: inline-block;
+  }
+
+  .imagem-responsiva {
+
+    width: 100%;
+  }
 </style>

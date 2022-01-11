@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
+//ativando módulo/plugin no global view project
+import VueResource from 'vue-resource';
 
-Vue.config.productionTip = false
+Vue.use(VueResource);
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  el: '#app',
+  render: h => h(App)
+})
