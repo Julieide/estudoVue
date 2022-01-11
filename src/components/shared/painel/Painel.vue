@@ -1,17 +1,28 @@
 
 <template>
-    <div class="painel">
-        <h2 class="painel-titulo">{{ titulo }}</h2>
-        <!-- slot define a área que irá receber todo contéudo vindo da 'API' ou outros conteúdos que queira que seja inserido -->
-        <slot class="painel-conteudo">
-        </slot>
+    <div class="painel"> <!-- v-on substituido por @, qdo duplo click no titulo traz diferente da variável visivel-->
+        <h2 class="painel-titulo" @dblclick="visivel = !visivel">{{ titulo }}</h2> 
+        <!-- transition >> aplicando efeito no componente-->
+         <transition name = "painel-fade"> 
+            <div class="painel-conteudo" v-show="visivel">
+              <!-- slot define a área que irá receber todo contéudo vindo da 'API' ou outros conteúdos que queira que seja inserido -->
+              <slot>
+              </slot>
+            </div>
+         </transition>
     </div>
 </template>
 
 <script>
 export default {
 
-    props: ['titulo']
+    props: ['titulo'],
+
+    data() {
+      return {
+        visivel: true //variável visivel usada para mostrar ou não o conteudo no painel
+      }
+    }
 }
 
 </script>
@@ -37,6 +48,14 @@ export default {
     padding: 10px;
     text-transform: uppercase;
   }
+
+  .painel-fade-enter, .painel-fade-leave-active {
+    opacity: 0
+  }
+
+ .painel-fade-enter-active, .painel-fade-leave-active {
+    transition: opacity .4s
+ }
 
   * {
       box-shadow: 5px 5px 5px;
