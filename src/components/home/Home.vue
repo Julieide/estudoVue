@@ -10,8 +10,14 @@
       <ul class="lista-fotos">
         <li class="lista-fotos-item" v-for="foto of fotosComFiltro" :key="foto.titulo">
 
-          <meu-painel :titulo="foto.titulo"> <!-- v-bind ':' flui da fonte para view-->
-              <imagem-responsiva :url="foto.url" :titulo="foto.titulo"/>
+          <meu-painel :titulo="foto.titulo">
+                <imagem-responsiva :url="foto.url" :titulo="foto.titulo"/>
+                <meu-botao 
+                  rotulo="remover" 
+                  tipo="button" 
+                  :confirmacao="true" 
+                  @botaoAtivado="remove(foto)"
+                  estilo="padrao"/> <!--passando o valor como string, nesse caso não precisa v-bind : -->
           </meu-painel>
 
         </li>
@@ -22,12 +28,14 @@
 <script>
 import Painel from '../shared/painel/Painel.vue';
 import ImagemResponsiva from '../shared/imagem-responsiva/imagemResponsiva.vue';
+import Botao from '../shared/botao/Botao.vue';
 
 export default {
 
   components: {
     'meu-painel' : Painel,
-    'imagem-responsiva' : ImagemResponsiva //após importado deve-se registrar o componente em components
+    'imagem-responsiva' : ImagemResponsiva, //após importado deve-se registrar o componente em components
+    'meu-botao' : Botao
   },
 
   data() {
@@ -50,6 +58,13 @@ export default {
       } else {
         return this.fotos;
       }
+    }
+  },
+
+  methods: {
+
+    remove(foto) {
+        alert('Deseja remover a foto: ' + foto.titulo);
     }
   },
 
