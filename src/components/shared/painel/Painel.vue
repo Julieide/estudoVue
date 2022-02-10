@@ -61,4 +61,8 @@ export default {
       box-shadow: 5px 5px 5px;
   }
 
+  .painel-conteudo {
+    overflow: hidden; /*não deixa a imagem passar do tamanho do painel*/
+  }
+
 </style>

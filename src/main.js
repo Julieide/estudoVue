@@ -5,6 +5,7 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 //tem que vir em {}, pq não é default
 import { routes } from './routes';
+import './directives/Transform.js';
 
 Vue.use(VueRouter);
 //configurando um roteador para enxergar as rotas
