@@ -27,7 +27,7 @@
 
 <script>
 import Painel from '../shared/painel/Painel.vue';
-import ImagemResponsiva from '../shared/imagem-responsiva/imagemResponsiva.vue';
+import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue';
 import Botao from '../shared/botao/Botao.vue';
 
 export default {

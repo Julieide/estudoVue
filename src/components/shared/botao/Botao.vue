@@ -36,14 +36,16 @@ export default {
 
    computed: {
 
-       estiloDoBotao() {
-
-           // se o valor é padrão ou não passou nada para estilo
-           if(this.estilo == 'padrao') return 'botao botao-padrao';
-
-           if(this.estilo == 'perigo') return 'botao botao-perigo';
-       }
-   }
+       estiloDoBotao: function () {
+        let estiloBotao
+        if (this.estilo == 'padrao' || !this.estilo) {
+          estiloBotao = "botao botao-padrao"
+        }  else if (this.estilo == 'perigo') {
+           estiloBotao = "botao botao-perigo"
+        }
+         return estiloBotao; 
+     }
+    }
 }
 </script>
 
