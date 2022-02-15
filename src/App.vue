@@ -23,7 +23,7 @@ export default {
 
   data () {
     return {
-      routes
+      routes: routes.filter(route => route.menu) //para cada item do array verifica o item do menu
     }
   }
  

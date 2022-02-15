@@ -4,7 +4,11 @@
     <h1 class="titulo">{{ titulo }}</h1>
     <h2 class="subtitulo">{{ subtitulo }}</h2>
 
+    <!-- novo elemento para exibir mensagens para o usuário -->
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
+
     <h5 class="titulo-filtro"> Pesquisa </h5> <!-- v-on '@' da view para fonte-->
+
     <input type="search" class="filtro" v-on:input="filtro = $event.target.value" placeholder="Digite o título da foto!">
       
       <ul class="lista-fotos">
@@ -29,6 +33,8 @@
 import Painel from '../shared/painel/Painel.vue';
 import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue';
 import Botao from '../shared/botao/Botao.vue';
+// importando FotoService
+import FotoService from '../../domain/foto/FotoService';
 
 export default {
 
@@ -46,7 +52,9 @@ export default {
       subtitulo: 'Estudo Vue',
       filtro: '',
 
-      fotos: []
+      fotos: [],
+
+      mensagem: ''
     }
   },
 
@@ -64,15 +72,42 @@ export default {
   methods: {
 
     remove(foto) {
-        alert('Deseja remover a foto: ' + foto.titulo);
+
+      this.service
+        .apaga(foto._id)
+        .then(
+          () => {
+            let indice = this.fotos.indexOf(foto);
+            this.fotos.splice(indice, 1);
+            this.mensagem = 'Foto removida com sucesso'
+          }, 
+          err => {
+            this.mensagem = 'Não foi possível remover a foto';
+            console.log(err);
+          }
+        )
     }
   },
 
   created() {
 
-    this.$http.get('http://localhost:3000/v1/fotos')
+    // parametrizando o endereço
+    //this.resource = this.$resource('v1/fotos{/id}');
+
+    // criando uma instância do nosso serviço que depende de $resource
+    this.service = new FotoService(this.$resource);
+
+    this.service
+      .lista()
+      .then(fotos => this.fotos = fotos, err => console.log(err));
+
+
+    /*
+    this.$http
+      .get('v1/fotos')
       .then(res => res.json())
       .then(fotos => this.fotos = fotos, err => console.log(err));
+      */
   }
 }
 

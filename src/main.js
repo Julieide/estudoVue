@@ -8,13 +8,17 @@ import { routes } from './routes';
 import './directives/Transform.js';
 
 Vue.use(VueRouter);
+
+Vue.use(VueResource);
+
+// http usará sempre o endereço abaixo
+Vue.http.options.root = 'http://localhost:3000/v1';
+
 //configurando um roteador para enxergar as rotas
 const router = new VueRouter ({ 
   routes: routes, // instancia de Router passando a propriedade da rota
   mode: 'history' //usando history o vue.cli se encarrega de encontrar o caminho sem o #
 }); 
-
-Vue.use(VueResource);
 
 new Vue({
   el: '#app',
