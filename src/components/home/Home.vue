@@ -16,12 +16,19 @@
 
           <meu-painel :titulo="foto.titulo">
                 <imagem-responsiva v-meu-transform:scale.animate="1.2" :url="foto.url" :titulo="foto.titulo"/>
+                
+                <router-link :to="{ name: 'altera', params: { id : foto._id }}">
+                  <meu-botao 
+                    rotulo="Alterar" 
+                    tipo="button"/>
+                </router-link> 
+
                 <meu-botao 
                   rotulo="remover" 
                   tipo="button" 
                   :confirmacao="true" 
                   @botaoAtivado="remove(foto)"
-                  estilo="padrao"/> <!--passando o valor como string, nesse caso não precisa v-bind : -->
+                  estilo="perigo"/> <!--passando o valor como string, nesse caso não precisa v-bind : -->
           </meu-painel>
 
         </li>
@@ -81,10 +88,7 @@ export default {
             this.fotos.splice(indice, 1);
             this.mensagem = 'Foto removida com sucesso'
           }, 
-          err => {
-            this.mensagem = 'Não foi possível remover a foto';
-            console.log(err);
-          }
+          err => this.mensagem = err.message
         )
     }
   },
@@ -99,7 +103,7 @@ export default {
 
     this.service
       .lista()
-      .then(fotos => this.fotos = fotos, err => console.log(err));
+      .then(fotos => this.fotos = fotos, err => this.mensagem = err.message);
 
 
     /*
